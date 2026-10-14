@@ -1,0 +1,12 @@
+{
+  "name": "reference-to-motion",
+  "owner": { "name": "nicolleadduci", "url": "https://github.com/nicolleadduci" },
+  "plugins": [
+    {
+      "name": "reference-to-motion",
+      "source": "./",
+      "description": "Turn a reference video into a brand motion-graphics film, cut to the beat of the music, built in Remotion.",
+      "version": "1.0.0"
+    }
+  ]
+}

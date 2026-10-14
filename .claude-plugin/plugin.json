@@ -1,0 +1,10 @@
+{
+  "name": "reference-to-motion",
+  "version": "1.0.0",
+  "description": "Turn a reference video into a brand motion-graphics film: measure the reference frame by frame, write a style guide and a beat-synced shot list, build in Remotion, check every render.",
+  "author": { "name": "nicolleadduci", "url": "https://github.com/nicolleadduci" },
+  "homepage": "https://github.com/nicolleadduci/reference-to-motion",
+  "repository": "https://github.com/nicolleadduci/reference-to-motion",
+  "license": "MIT",
+  "keywords": ["motion-graphics", "remotion", "video", "reference", "style-guide", "shot-list", "music-sync", "brand"]
+}

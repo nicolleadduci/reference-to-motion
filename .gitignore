@@ -1,0 +1,7 @@
+.DS_Store
+*.rgb
+*.raw
+*.wav
+*.mp4
+*.mov
+node_modules/

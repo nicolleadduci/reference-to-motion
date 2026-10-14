@@ -1,0 +1,31 @@
+<!doctype html><meta charset=utf8>
+<!-- Type ID: open headless with ?fams=Inter|DM+Sans&text=Your+headline&w=400,500,600,700
+     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu \
+       --virtual-time-budget=15000 --dump-dom "file:///path/font-match.html?fams=Inter|DM+Sans&text=..."
+     Compare each candidate's ratios with the same ratios measured on a
+     native crop of the reference headline (crop.js): ink width / ascender,
+     x-height / ascender, and x-band coverage (weight proxy). The closest
+     family+weight on ALL three wins; report the numbers, not a guess. -->
+<pre id=o>pending</pre>
+<script>
+(async () => {
+  const q = new URLSearchParams(location.search);
+  const fams = (q.get("fams") || "Inter|DM+Sans").split("|");
+  const ws = (q.get("w") || "400,500,600,700").split(",");
+  const T = q.get("text") || "Control spend before it happens.";
+  const l = document.createElement("link"); l.rel = "stylesheet";
+  l.href = "https://fonts.googleapis.com/css2?" + fams.map((f) => `family=${f}:wght@${ws.join(";")}`).join("&") + "&display=block";
+  document.head.appendChild(l); await new Promise((r) => (l.onload = r, setTimeout(r, 5000)));
+  const out = [];
+  const c = document.createElement("canvas"); c.width = 4200; c.height = 500; const g = c.getContext("2d", { willReadFrequently: true });
+  const ink = (txt, font) => { g.fillStyle = "#fff"; g.fillRect(0, 0, 4200, 500); g.fillStyle = "#000"; g.font = font; g.fillText(txt, 50, 350); const d = g.getImageData(0, 0, 4200, 500).data; let x0 = 1e9, x1 = -1, y0 = 1e9; const rows = new Array(500).fill(0); for (let y = 0; y < 500; y++) for (let x = 0; x < 4200; x++) if (d[(y * 4200 + x) * 4] < 128) { rows[y]++; x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); } return { w: x1 - x0 + 1, top: 350 - y0, rows }; };
+  for (const f of fams) for (const w of ws) {
+    const fam = `'${f.replace(/\+/g, " ")}'`, font = `${w} 200px ${fam}`;
+    await document.fonts.load(font).catch(() => {});
+    const a = ink(T, font), xx = ink("x", font);
+    let cov = 0; for (let y = 350 - xx.top; y < 350; y++) cov += a.rows[y]; cov /= xx.top * a.w;
+    out.push(`${f.replace(/\+/g, " ")} ${w} loaded=${document.fonts.check(font)} inkW/asc=${(a.w / a.top).toFixed(3)} x/asc=${(xx.top / a.top).toFixed(3)} xbandCoverage=${cov.toFixed(3)}`);
+  }
+  document.getElementById("o").textContent = out.join("\n");
+})();
+</script>
