@@ -1,6 +1,10 @@
 {
   "name": "reference-to-motion",
-  "owner": { "name": "nicolleadduci", "url": "https://github.com/nicolleadduci" },
+  "description": "Reference to Motion: a Claude Code skill for reference-matched, beat-synced motion graphics films in Remotion.",
+  "owner": {
+    "name": "nicolleadduci",
+    "url": "https://github.com/nicolleadduci"
+  },
   "plugins": [
     {
       "name": "reference-to-motion",
